@@ -13,29 +13,44 @@ import static org.hamcrest.Matchers.*;
 public class j_hamcRestExample {
 
     @BeforeAll
-    public static void init(){
-        baseURI ="http://54.91.166.114";
+    public static void init() {
+        baseURI = "http://54.91.166.114";
         port = 8000;
         basePath = "api";
     }
 
-     @Test
-    public void test1(){
+    @Test
+    public void test1() {
 
-         given().accept(ContentType.JSON)
-                 .get("/spartans")
-                 .then()
-                 .statusCode(200)
-                 .contentType("application/json")
-                 .body("id[0]", is(2))
-                 .header("Keep-Alive","timeout=60")
-                 .body("name",hasItem("IkinciMehmet"))
-                 .body("id",hasItems(2,5,132));
+        given().accept(ContentType.JSON)
+                .get("/spartans")
+                .then()
+                .statusCode(200)
+                .contentType("application/json")
+                .body("id[0]", is(2))
+                .header("Keep-Alive", "timeout=60")
+                .body("name", hasItem("IkinciMehmet"))
+                .body("id", hasItems(2, 5, 131))
+                .body("id", hasSize(125))
+                .body("id", everyItem(greaterThan(1)));
+
+    }
+
+    @Test
+    public void test2() {
 
 
 
-
-     }
+        given().accept(ContentType.JSON)
+                .queryParam("nameContains","a")
+                .when()
+                .get("spartans/search")
+                .then()
+                .statusCode(200)
+                .contentType("application/json")
+               // .extract().response().prettyPrint();
+                .body("content.name",everyItem(containsStringIgnoringCase("a")));
+    }
 
 
 }
