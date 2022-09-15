@@ -3,7 +3,7 @@ package com.khamam;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
-public class secondClass {
+public class b_secondClass {
 
     public static void main(String[] args) {
 
