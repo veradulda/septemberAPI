@@ -28,6 +28,7 @@ public class j_hamcRest {
 
          JsonPath jsonPath = given().accept(ContentType.JSON)
                  .get("/spartans")
+
                  .then()
                  .statusCode(200)
                  .contentType("application/json")
